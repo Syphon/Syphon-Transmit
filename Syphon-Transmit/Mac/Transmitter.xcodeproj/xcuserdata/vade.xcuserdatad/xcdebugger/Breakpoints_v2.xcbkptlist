@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "340"
             endingLineNumber = "340"
-            landmarkName = "TransmitPlugin::TransmitPlugin( tmStdParms* ioStdParms, tmPluginInfo* outPluginInfo)"
+            landmarkName = "TransmitPlugin::TransmitPlugin(tmStdParms* ioStdParms, tmPluginInfo* outPluginInfo)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
