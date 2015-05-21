@@ -100,18 +100,6 @@ public:
 	/**
 	**
 	*/
-//	static tmResult QueryAudioMode(
-//		const tmStdParms* inStdParms,
-//		const tmInstance* inInstance,
-//		csSDK_int32 inQueryIterationIndex,
-//		tmAudioMode* outAudioMode)
-//	{
-//		return ((TransmitInstance*)inInstance->ioPrivateInstanceData)->QueryAudioMode(inStdParms, inInstance, inQueryIterationIndex, outAudioMode);
-//	}
-
-	/**
-	**
-	*/
 	static tmResult QueryVideoMode(
 		const tmStdParms* inStdParms,
 		const tmInstance* inInstance,
@@ -184,7 +172,6 @@ DllExport PREMPLUGENTRY xTransmitEntry(
 		outModule->SetupDialog = TransmitModule::SetupDialog;
 		outModule->NeedsReset = TransmitModule::NeedsReset;
 		outModule->CreateInstance = TransmitModule::CreateInstance;
-//		outModule->QueryAudioMode = TransmitModule::QueryAudioMode;
 		outModule->QueryVideoMode = TransmitModule::QueryVideoMode;
 		outModule->ActivateDeactivate = TransmitModule::ActivateDeactivate;
 		outModule->StartPlaybackClock = TransmitModule::StartPlaybackClock;

@@ -32,8 +32,6 @@
 #import <OpenGL/OpenGL.h>
 
 #define	PLUGIN_DISPLAY_NAME	L"Syphon Server Transmitter"
-#define AUDIO_BUFFER_SIZE	2002 // This is on the high end of audio sample frames we can have in one video frame - 48 kHz / 23.976 fps
-#define AUDIO_BUFFER_MAX_CHANNELS	32
 
 typedef struct
 {
@@ -72,12 +70,6 @@ public:
         SyphonServer* syphonServer);
 
 	~TransmitInstance();
-
-//	tmResult QueryAudioMode(
-//		const tmStdParms* inStdParms,
-//		const tmInstance* inInstance,
-//		csSDK_int32 inQueryIterationIndex,
-//		tmAudioMode* outAudioMode);
 
     tmResult QueryVideoMode(
 		const tmStdParms* inStdParms,
@@ -121,8 +113,6 @@ private:
 
 	float						mPlaybackSpeed;
 	prBool						mPlaying;
-
-//	float *						mAudioBuffers[AUDIO_BUFFER_MAX_CHANNELS];
     
     // Our Syphon Server is passed in from our Plugin below during instantiation
     // We only use it to publish frames, so we dont do anything like dealloc it, etc.

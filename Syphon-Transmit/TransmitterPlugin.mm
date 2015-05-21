@@ -52,7 +52,6 @@ struct ClockInstanceData {
 		ClockInstanceData	*clockInstanceData	= 0;
 		clock_t				latestClockTime = clock();
 		PrTime				timeElapsed = 0;
-		int					audioSampleCount = 0;
 		
 		clockInstanceData = reinterpret_cast<ClockInstanceData*>(inInstanceData);
 
@@ -74,28 +73,11 @@ struct ClockInstanceData {
 			// Convert tempTimeElapsed to PrTime
 			timeElapsed = tempTimeElapsed * clockInstanceData->ticksPerSecond / CLOCKS_PER_SEC;
 
-			// How many audio samples shall we request?  Calculate the number of audio samples in one frame
-			audioSampleCount = (int) (clockInstanceData->audioSampleRate * clockInstanceData->videoFrameRate / clockInstanceData->ticksPerSecond);
-			if (audioSampleCount > AUDIO_BUFFER_SIZE)
-			{
-				// If we get here, we underestimated the size of the audio buffer, and may need to adjust it higher.
-				NSLog(@"AUDIO_BUFFER_SIZE too small.");
-
-				audioSampleCount = AUDIO_BUFFER_SIZE;
-			}
-
-			// Request the audio!  But... we don't do anything with it for now.  At least we know if it's valid.
-			clockInstanceData->suites.PlayModuleAudioSuite->GetNextAudioBuffer(clockInstanceData->playID, 0, clockInstanceData->audioBuffers, audioSampleCount);
-
-//			NSLog(		@"Clock callback made. %llu ticks, or %lu microseconds elapsed. Sleeping for %lu microseconds.",
-//						timeElapsed,
-//						tempTimeElapsed,
-//						timeBetweenClockUpdates);
-
 			clockInstanceData->clockCallback(*clockInstanceData->callbackContextPtr, timeElapsed);
 
 			// Sleep for a frame's length
-			usleep(timeBetweenClockUpdates / 2); // Try sleeping for the half the time, since Mac OS seems to oversleep :)
+			// Try sleeping for the half the time, since Mac OS seems to oversleep :)
+            usleep(timeBetweenClockUpdates / 2);
 		}
 
 		NSLog(		@"Clock with callback context %llx exited.",
@@ -104,14 +86,8 @@ struct ClockInstanceData {
 		delete(clockInstanceData);
 	}
 
+#pragma mark - Instance Methods
 
-////
-//// TransmitInstance methods
-////
-
-	/*
-	**
-	*/
 	TransmitInstance::TransmitInstance(
 		const tmInstance* inInstance,
 		const SDKDevicePtr& inDevice,
@@ -135,50 +111,20 @@ struct ClockInstanceData {
         }
         
 		mSuites.TimeSuite->GetTicksPerSecond(&mTicksPerSecond);
-//		for (int i = 0; i < AUDIO_BUFFER_MAX_CHANNELS; i++)
-//		{
-//			mAudioBuffers[i] = new float[AUDIO_BUFFER_SIZE];
-//		}
-
-		NSLog(		@"Clocks per second: %i.",
-					CLOCKS_PER_SEC);
         }
 
+#pragma mark -
 
-
-	/* Shutdown is handled here.
-	**
-	*/
 	TransmitInstance::~TransmitInstance()
 	{
-		// Be a good citizen and dispose of any memory used
-//		for (int i = 0; i < AUDIO_BUFFER_MAX_CHANNELS; i++)
-//		{
-//			delete(mAudioBuffers[i]);
-//        }
+        // TODO: Do we want to nil our syphon handle here?
+        // Does that fuck with retain count / release ?
     }
 
-	/*
-	**
-	*/
-//	tmResult TransmitInstance::QueryAudioMode(
-//		const tmStdParms* inStdParms,
-//		const tmInstance* inInstance,
-//		csSDK_int32 inQueryIterationIndex,
-//		tmAudioMode* outAudioMode)
-//	{
-//		outAudioMode->outNumChannels = 2;
-//		outAudioMode->outAudioSampleRate = 48000;
-//		outAudioMode->outMaxBufferSize = 48000;
-//		outAudioMode->outChannelLabels[0] = kPrAudioChannelLabel_FrontLeft;
-//		outAudioMode->outChannelLabels[1] = kPrAudioChannelLabel_FrontRight;
-//		outAudioMode->outLatency = inInstance->inVideoFrameRate * 5; // Ask for 5 video frames preroll
-//		return tmResult_Success;
-//	}
 
-	/* We're not picky.  We claim to support any format the host can throw at us (yeah right).
-	**
-	*/
+#pragma mark - Query Video Mode
+
+/* We're not picky.  We claim to support any format the host can throw at us (yeah right). */
 	tmResult TransmitInstance::QueryVideoMode(
 		const tmStdParms* inStdParms,
 		const tmInstance* inInstance,
@@ -193,15 +139,13 @@ struct ClockInstanceData {
         outVideoMode->outPixelFormat =  PrPixelFormat_BGRA_4444_8u;//PrPixelFormat_Any;// PrPixelFormat_BGRA_4444_8u; // or PrPixelFormat_ARGB_4444_8u
         outVideoMode->outLatency = inInstance->inVideoFrameRate * 1; // Ask for 5 frames preroll
 
-        
 		mVideoFrameRate = inInstance->inVideoFrameRate;
 
 		return tmResult_Success;
 	}
 
-	/*
-	**
-	*/
+#pragma mark - Activate/Deactivate
+
 	tmResult TransmitInstance::ActivateDeactivate(
 		const tmStdParms* inStdParms,
 		const tmInstance* inInstance,
@@ -230,9 +174,8 @@ struct ClockInstanceData {
 		return tmResult_Success;
 	}
 	
-	/*
-	**
-	*/
+#pragma mark - Start Clock
+
 	tmResult TransmitInstance::StartPlaybackClock(
 		const tmStdParms* inStdParms,
 		const tmInstance* inInstance,
@@ -275,8 +218,6 @@ struct ClockInstanceData {
 			instanceData->ticksPerSecond = mTicksPerSecond;
 			instanceData->videoFrameRate = mVideoFrameRate;
 			instanceData->playID = inInstance->inPlayID;
-//			instanceData->audioBuffers = mAudioBuffers;
-//			instanceData->audioSampleRate = inInstance->inAudioSampleRate;
 			instanceData->suites = mSuites;
 
 			// Cross-platform threading suites!
@@ -289,9 +230,8 @@ struct ClockInstanceData {
 		return tmResult_Success;
 	}
 
-	/*
-	**
-	*/
+#pragma mark - Stop Clock
+
 	tmResult TransmitInstance::StopPlaybackClock(
 		const tmStdParms* inStdParms,
 		const tmInstance* inInstance)
@@ -311,9 +251,8 @@ struct ClockInstanceData {
 		return tmResult_Success;
 	}
 
-	/*
-	**
-	*/
+#pragma mark - Push Video
+
 	tmResult TransmitInstance::PushVideo(
 		const tmStdParms* inStdParms,
 		const tmInstance* inInstance,
@@ -325,8 +264,6 @@ struct ClockInstanceData {
 		csSDK_uint32	parNum				= 0,
 						parDen				= 0;
 		PrPixelFormat	pixelFormat			= PrPixelFormat_Invalid;
-//		int				audioSampleCount = 0;
-//		prSuiteError	returnValue			= 0;
 
 		frameTimeInSeconds = (float) inPushVideo->inTime / mTicksPerSecond;
 		mSuites.PPixSuite->GetBounds(inPushVideo->inFrames[0].inFrame, &frameBounds);
@@ -345,7 +282,7 @@ struct ClockInstanceData {
 
             NSRect syphonRect = NSMakeRect(0, 0, abs(frameBounds.right - frameBounds.left), abs(frameBounds.top - frameBounds.bottom));
             
-            // Upload the contents of the frame to opengl here.
+            // TODO: use bind to draw frame of size / unbind
             GLuint texture = 0;
             glGenTextures(1, &texture);
             glEnable(GL_TEXTURE_RECTANGLE_EXT);
@@ -359,40 +296,10 @@ struct ClockInstanceData {
             glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA, syphonRect.size.width, syphonRect.size.height, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
             
             [mSyphonServerParentInstance publishFrameTexture:texture textureTarget:GL_TEXTURE_RECTANGLE_EXT imageRegion:syphonRect textureDimensions:syphonRect.size flipped:NO];
-            
         
             glDeleteTextures(1, &texture);
         }
-//		NSLog(@"PushVideo called for time %7.2f, frame size: %d x %d, PAR: %4.3f, pixel format: %#x.",
-//			  frameTimeInSeconds,
-//			  abs(frameBounds.right - frameBounds.left),
-//			  abs(frameBounds.top - frameBounds.bottom),
-//			  (float) parNum / parDen,
-//			  pixelFormat);
-		
-		//
-		// This is where a transmit plug-in could queue up the frame to an actual hardware device.
-		//
-
-		// Call this only during scrubbing, or during preroll to get audio for the preroll frames.
-		// The rest of the audio during playback should be requested in our clock callback: UpdateClock()
-		if (inPushVideo->inPlayMode == playmode_Scrubbing ||
-			(inPushVideo->inPlayMode == playmode_Playing && !mPlaying))
-		{
-//			// How many audio samples shall we request?  Calculate the number of audio samples in one frame
-//			audioSampleCount = (int) (inInstance->inAudioSampleRate * mVideoFrameRate / mTicksPerSecond);
-//			if (audioSampleCount > AUDIO_BUFFER_SIZE)
-//			{
-//				// If we get here, we underestimated the size of the audio buffer, and may need to adjust it higher
-//				NSLog(@"AUDIO_BUFFER_SIZE too small.");
-//
-//				audioSampleCount = AUDIO_BUFFER_SIZE;
-//			}
-//
-//			// Request the audio!  But... we don't do anything with it for now.  At least we know if it's valid.
-//			returnValue = mSuites.PlayModuleAudioSuite->GetNextAudioBuffer(inInstance->inPlayID, 0, (float **)mAudioBuffers, audioSampleCount);
-		}
-		
+				
 		// Dispose of the PPix(es) when done!
 		for (int i=0; i< inPushVideo->inFrameCount; i++)
 		{
@@ -402,14 +309,8 @@ struct ClockInstanceData {
 		return tmResult_Success;
 	}
 
+#pragma mark - Trasmit Plugin Methods
 
-////
-//// TransmitPlugin methods
-////
-
-	/* Startup is handled here.
-	**
-	*/
 	TransmitPlugin::TransmitPlugin(
 		tmStdParms* ioStdParms,
 		tmPluginInfo* outPluginInfo)
@@ -427,7 +328,6 @@ struct ClockInstanceData {
 
 		// Acquire any suites needed!
 		mSuites.SPBasic = ioStdParms->piSuites->utilFuncs->getSPBasicSuite();
-//		mSuites.SPBasic->AcquireSuite(kPrSDKPlayModuleAudioSuite, kPrSDKPlayModuleAudioSuiteVersion, const_cast<const void**>(reinterpret_cast<void**>(&mSuites.PlayModuleAudioSuite)));
 		mSuites.SPBasic->AcquireSuite(kPrSDKPPixSuite, kPrSDKPPixSuiteVersion, const_cast<const void**>(reinterpret_cast<void**>(&mSuites.PPixSuite)));
 		mSuites.SPBasic->AcquireSuite(kPrSDKThreadedWorkSuite, kPrSDKThreadedWorkSuiteVersion3, const_cast<const void**>(reinterpret_cast<void**>(&mSuites.ThreadedWorkSuite)));
 		mSuites.SPBasic->AcquireSuite(kPrSDKTimeSuite, kPrSDKTimeSuiteVersion, const_cast<const void**>(reinterpret_cast<void**>(&mSuites.TimeSuite)));
@@ -464,13 +364,11 @@ struct ClockInstanceData {
 
 	}
 
-	/* Shutdown is handled here.
-	**
-	*/
+#pragma mark - Shutdown
+
 	TransmitPlugin::~TransmitPlugin()
 	{
 		// Be a good citizen and dispose of any suites used
-//		mSuites.SPBasic->ReleaseSuite(kPrSDKPlayModuleAudioSuite, kPrSDKPlayModuleAudioSuiteVersion);
 		mSuites.SPBasic->ReleaseSuite(kPrSDKPPixSuite, kPrSDKPPixSuiteVersion);
 		mSuites.SPBasic->ReleaseSuite(kPrSDKThreadedWorkSuite, kPrSDKThreadedWorkSuiteVersion3);
 		mSuites.SPBasic->ReleaseSuite(kPrSDKTimeSuite, kPrSDKTimeSuiteVersion);
@@ -492,9 +390,8 @@ struct ClockInstanceData {
 
 	}
 
-	/*
-	**
-	*/
+#pragma mark - Setup Dialog (N/A?)
+
 	tmResult TransmitPlugin::SetupDialog(
 		tmStdParms* ioStdParms,
 		prParentWnd inParentWnd)
@@ -508,9 +405,8 @@ struct ClockInstanceData {
 		return tmResult_Success;
 	}
 	
-	/*
-	**
-	*/
+#pragma mark - Reset
+
 	tmResult TransmitPlugin::NeedsReset(
 		const tmStdParms* inStdParms,
 		prBool* outResetModule)
@@ -524,15 +420,16 @@ struct ClockInstanceData {
 		return tmResult_Success;
 	}
 	
-	/*
-	**
-	*/
+#pragma mark - Create
+
 	void* TransmitPlugin::CreateInstance(
 		const tmStdParms* inStdParms,
 		tmInstance* inInstance)
 	{
 		return new TransmitInstance(inInstance, mDevice, mSettings, mSuites, mSyphonServer);
 	}
+
+#pragma mark - Dispose
 
 	void TransmitPlugin::DisposeInstance(
 		const tmStdParms* inStdParms,
