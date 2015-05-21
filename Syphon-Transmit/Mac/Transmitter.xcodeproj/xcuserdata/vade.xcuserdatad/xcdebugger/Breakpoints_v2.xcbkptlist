@@ -9,7 +9,7 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../TransmitterPlugin.mm"
+            filePath = "../SyphonTransmitterPlugin.mm"
             timestampString = "453825596.761988"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"

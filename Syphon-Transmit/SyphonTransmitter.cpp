@@ -19,7 +19,7 @@
 /*                                                                 */
 /*******************************************************************/
 
-#include "TransmitterPlugin.h"
+#include "SyphonTransmitterPlugin.h"
 
 using namespace SDK;
 
@@ -29,69 +29,69 @@ using namespace SDK;
  ** A pointer to the TransmitPlugin is saved in ioStdParms->ioPrivatePluginData, and
  ** pointers to TransmitInstances are saved in ioPrivateInstanceData.
  */
-class TransmitModule
+class SyphonTransmitModule
 {
 public:
     
     static tmResult Startup(tmStdParms* ioStdParms, tmPluginInfo* outPluginInfo)
     {
-        ioStdParms->ioPrivatePluginData = new TransmitPlugin(ioStdParms, outPluginInfo);
+        ioStdParms->ioPrivatePluginData = new SyphonTransmitPlugin(ioStdParms, outPluginInfo);
         return tmResult_Success;
     }
     
     static tmResult Shutdown(tmStdParms* ioStdParms)
     {
-        delete (TransmitPlugin*)ioStdParms->ioPrivatePluginData;
+        delete (SyphonTransmitPlugin*)ioStdParms->ioPrivatePluginData;
         ioStdParms->ioPrivatePluginData = 0;
         return tmResult_Success;
     }
     
     static tmResult SetupDialog(tmStdParms* ioStdParms, prParentWnd inParentWnd)
     {
-        return ((TransmitPlugin*)ioStdParms->ioPrivatePluginData)->SetupDialog(ioStdParms, inParentWnd);
+        return ((SyphonTransmitPlugin*)ioStdParms->ioPrivatePluginData)->SetupDialog(ioStdParms, inParentWnd);
     }
     
     static tmResult NeedsReset(const tmStdParms* inStdParms, prBool* outResetModule)
     {
-        return ((TransmitPlugin*)inStdParms->ioPrivatePluginData)->NeedsReset(inStdParms, outResetModule);
+        return ((SyphonTransmitPlugin*)inStdParms->ioPrivatePluginData)->NeedsReset(inStdParms, outResetModule);
     }
     
     static tmResult CreateInstance(const tmStdParms* inStdParms, tmInstance* ioInstance)
     {
-        ioInstance->ioPrivateInstanceData = ((TransmitPlugin*)inStdParms->ioPrivatePluginData)->CreateInstance(inStdParms, ioInstance);
+        ioInstance->ioPrivateInstanceData = ((SyphonTransmitPlugin*)inStdParms->ioPrivatePluginData)->CreateInstance(inStdParms, ioInstance);
         return ioInstance->ioPrivateInstanceData != 0 ? tmResult_Success : tmResult_ErrorUnknown;
     }
     
     static tmResult DisposeInstance(const tmStdParms* inStdParms, tmInstance* ioInstance)
     {
-        ((TransmitPlugin*)inStdParms->ioPrivatePluginData)->DisposeInstance(inStdParms, ioInstance);
+        ((SyphonTransmitPlugin*)inStdParms->ioPrivatePluginData)->DisposeInstance(inStdParms, ioInstance);
         ioInstance->ioPrivateInstanceData = 0;
         return tmResult_Success;
     }
     
     static tmResult QueryVideoMode(const tmStdParms* inStdParms, const tmInstance* inInstance, csSDK_int32 inQueryIterationIndex, tmVideoMode* outVideoMode)
     {
-        return ((TransmitInstance*)inInstance->ioPrivateInstanceData)->QueryVideoMode(inStdParms, inInstance, inQueryIterationIndex, outVideoMode);
+        return ((SyphonTransmitInstance*)inInstance->ioPrivateInstanceData)->QueryVideoMode(inStdParms, inInstance, inQueryIterationIndex, outVideoMode);
     }
     
     static tmResult ActivateDeactivate(const tmStdParms* inStdParms, const tmInstance* inInstance, PrActivationEvent inActivationEvent, prBool inAudioActive, prBool inVideoActive)
     {
-        return ((TransmitInstance*)inInstance->ioPrivateInstanceData)->ActivateDeactivate(inStdParms, inInstance, inActivationEvent, inAudioActive, inVideoActive);
+        return ((SyphonTransmitInstance*)inInstance->ioPrivateInstanceData)->ActivateDeactivate(inStdParms, inInstance, inActivationEvent, inAudioActive, inVideoActive);
     }
     
     static tmResult StartPlaybackClock(const tmStdParms* inStdParms, const tmInstance* inInstance, const tmPlaybackClock* inClock)
     {
-        return ((TransmitInstance*)inInstance->ioPrivateInstanceData)->StartPlaybackClock(inStdParms, inInstance, inClock);
+        return ((SyphonTransmitInstance*)inInstance->ioPrivateInstanceData)->StartPlaybackClock(inStdParms, inInstance, inClock);
     }
     
     static tmResult StopPlaybackClock(const tmStdParms* inStdParms, const tmInstance* inInstance)
     {
-        return ((TransmitInstance*)inInstance->ioPrivateInstanceData)->StopPlaybackClock(inStdParms, inInstance);
+        return ((SyphonTransmitInstance*)inInstance->ioPrivateInstanceData)->StopPlaybackClock(inStdParms, inInstance);
     }
     
     static tmResult PushVideo(const tmStdParms* inStdParms, const tmInstance* inInstance, const tmPushVideo* inPushVideo)
     {
-        return ((TransmitInstance*)inInstance->ioPrivateInstanceData)->PushVideo(inStdParms, inInstance, inPushVideo);
+        return ((SyphonTransmitInstance*)inInstance->ioPrivateInstanceData)->PushVideo(inStdParms, inInstance, inPushVideo);
     }
 };
 
@@ -104,16 +104,16 @@ extern "C"
         
         if (inLoadModule)
         {
-            outModule->Startup = TransmitModule::Startup;
-            outModule->Shutdown = TransmitModule::Shutdown;
-            outModule->SetupDialog = TransmitModule::SetupDialog;
-            outModule->NeedsReset = TransmitModule::NeedsReset;
-            outModule->CreateInstance = TransmitModule::CreateInstance;
-            outModule->QueryVideoMode = TransmitModule::QueryVideoMode;
-            outModule->ActivateDeactivate = TransmitModule::ActivateDeactivate;
-            outModule->StartPlaybackClock = TransmitModule::StartPlaybackClock;
-            outModule->StopPlaybackClock = TransmitModule::StopPlaybackClock;
-            outModule->PushVideo = TransmitModule::PushVideo;
+            outModule->Startup = SyphonTransmitModule::Startup;
+            outModule->Shutdown = SyphonTransmitModule::Shutdown;
+            outModule->SetupDialog = SyphonTransmitModule::SetupDialog;
+            outModule->NeedsReset = SyphonTransmitModule::NeedsReset;
+            outModule->CreateInstance = SyphonTransmitModule::CreateInstance;
+            outModule->QueryVideoMode = SyphonTransmitModule::QueryVideoMode;
+            outModule->ActivateDeactivate = SyphonTransmitModule::ActivateDeactivate;
+            outModule->StartPlaybackClock = SyphonTransmitModule::StartPlaybackClock;
+            outModule->StopPlaybackClock = SyphonTransmitModule::StopPlaybackClock;
+            outModule->PushVideo = SyphonTransmitModule::PushVideo;
         }
         else
         {

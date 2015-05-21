@@ -59,17 +59,17 @@ namespace SDK
 /* The TransmitInstance class is called by the TransmitModule and the TransmitPlugin to handle many calls from the transmit host.
 ** There can be several instances outstanding at any given time.
 */
-class TransmitInstance
+class SyphonTransmitInstance
 {
 public:
-	TransmitInstance(
+	SyphonTransmitInstance(
 		const tmInstance* inInstance,
 		const SDKDevicePtr& inDevice,
 		const SDKSettings& inSettings,
 		const SDKSuites& inSuites,
         SyphonServer* syphonServer);
 
-	~TransmitInstance();
+	~SyphonTransmitInstance();
 
     tmResult QueryVideoMode(
 		const tmStdParms* inStdParms,
@@ -124,14 +124,14 @@ private:
 ** It also handles creation and cleanup of TransmitInstances.
 ** There could concievably be multiple plugins in a single module, although we only implement one here.
 */
-class TransmitPlugin
+class SyphonTransmitPlugin
 {
 public:
-	TransmitPlugin(
+	SyphonTransmitPlugin(
 		tmStdParms* ioStdParms,
 		tmPluginInfo* outPluginInfo);
 
-	~TransmitPlugin();
+	~SyphonTransmitPlugin();
 
 	tmResult SetupDialog(
 		tmStdParms* ioStdParms,

@@ -20,7 +20,7 @@
 /*******************************************************************/
 
 
-#include "TransmitterPlugin.h"
+#include "SyphonTransmitterPlugin.h"
 #include <stdio.h>
 #include <ctime>
 using namespace SDK;
@@ -84,11 +84,11 @@ void UpdateClock(void* inInstanceData, csSDK_int32 inPluginID, prSuiteError inSt
 
 #pragma mark - Instance Methods
 
-TransmitInstance::TransmitInstance(const tmInstance* inInstance,
-                                   const SDKDevicePtr& inDevice,
-                                   const SDKSettings& inSettings,
-                                   const SDKSuites& inSuites,
-                                   SyphonServer* syphonServer     )
+SyphonTransmitInstance::SyphonTransmitInstance(const tmInstance* inInstance,
+                                               const SDKDevicePtr& inDevice,
+                                               const SDKSettings& inSettings,
+                                               const SDKSuites& inSuites,
+                                               SyphonServer* syphonServer     )
 :
 mDevice(inDevice),
 mSettings(inSettings),
@@ -110,7 +110,7 @@ mSuites(inSuites)
 
 #pragma mark -
 
-TransmitInstance::~TransmitInstance()
+SyphonTransmitInstance::~SyphonTransmitInstance()
 {
     // TODO: Do we want to nil our syphon handle here?
     // Does that fuck with retain count / release ?
@@ -120,10 +120,10 @@ TransmitInstance::~TransmitInstance()
 #pragma mark - Query Video Mode
 
 /* We're not picky.  We claim to support any format the host can throw at us (yeah right). */
-tmResult TransmitInstance::QueryVideoMode(const tmStdParms* inStdParms,
-                                          const tmInstance* inInstance,
-                                          csSDK_int32 inQueryIterationIndex,
-                                          tmVideoMode* outVideoMode)
+tmResult SyphonTransmitInstance::QueryVideoMode(const tmStdParms* inStdParms,
+                                                const tmInstance* inInstance,
+                                                csSDK_int32 inQueryIterationIndex,
+                                                tmVideoMode* outVideoMode)
 {
     outVideoMode->outWidth = 0;
     outVideoMode->outHeight = 0;
@@ -140,11 +140,11 @@ tmResult TransmitInstance::QueryVideoMode(const tmStdParms* inStdParms,
 
 #pragma mark - Activate/Deactivate
 
-tmResult TransmitInstance::ActivateDeactivate(const tmStdParms* inStdParms,
-                                              const tmInstance* inInstance,
-                                              PrActivationEvent inActivationEvent,
-                                              prBool inAudioActive,
-                                              prBool inVideoActive)
+tmResult SyphonTransmitInstance::ActivateDeactivate(const tmStdParms* inStdParms,
+                                                    const tmInstance* inInstance,
+                                                    PrActivationEvent inActivationEvent,
+                                                    prBool inAudioActive,
+                                                    prBool inVideoActive)
 {
     NSLog(@"ActivateDeactivate called.");
     
@@ -169,9 +169,9 @@ tmResult TransmitInstance::ActivateDeactivate(const tmStdParms* inStdParms,
 	
 #pragma mark - Start Clock
 
-tmResult TransmitInstance::StartPlaybackClock(const tmStdParms* inStdParms,
-                                              const tmInstance* inInstance,
-                                              const tmPlaybackClock* inClock)
+tmResult SyphonTransmitInstance::StartPlaybackClock(const tmStdParms* inStdParms,
+                                                    const tmInstance* inInstance,
+                                                    const tmPlaybackClock* inClock)
 {
     float frameTimeInSeconds	= 0;
     
@@ -225,8 +225,8 @@ tmResult TransmitInstance::StartPlaybackClock(const tmStdParms* inStdParms,
 
 #pragma mark - Stop Clock
 
-tmResult TransmitInstance::StopPlaybackClock(const tmStdParms* inStdParms,
-                                             const tmInstance* inInstance)
+tmResult SyphonTransmitInstance::StopPlaybackClock(const tmStdParms* inStdParms,
+                                                   const tmInstance* inInstance)
 {
     mClockCallback = 0;
     mCallbackContext = 0;
@@ -245,9 +245,9 @@ tmResult TransmitInstance::StopPlaybackClock(const tmStdParms* inStdParms,
 
 #pragma mark - Push Video
 
-tmResult TransmitInstance::PushVideo(const tmStdParms* inStdParms,
-                                     const tmInstance* inInstance,
-                                     const tmPushVideo* inPushVideo)
+tmResult SyphonTransmitInstance::PushVideo(const tmStdParms* inStdParms,
+                                           const tmInstance* inInstance,
+                                           const tmPushVideo* inPushVideo)
 {
     // Send the video frames to the hardware.  We also log frame info to the debug console.
     float frameTimeInSeconds = 0;
@@ -302,8 +302,8 @@ tmResult TransmitInstance::PushVideo(const tmStdParms* inStdParms,
 
 #pragma mark - Trasmit Plugin Methods
 
-TransmitPlugin::TransmitPlugin(tmStdParms* ioStdParms,
-                               tmPluginInfo* outPluginInfo)
+SyphonTransmitPlugin::SyphonTransmitPlugin(tmStdParms* ioStdParms,
+                                           tmPluginInfo* outPluginInfo)
 {
     // Here, you could make sure hardware is available
     copyConvertStringLiteralIntoUTF16(PLUGIN_DISPLAY_NAME, outPluginInfo->outDisplayName);
@@ -355,7 +355,7 @@ TransmitPlugin::TransmitPlugin(tmStdParms* ioStdParms,
 
 #pragma mark - Shutdown
 
-TransmitPlugin::~TransmitPlugin()
+SyphonTransmitPlugin::~SyphonTransmitPlugin()
 {
     // Be a good citizen and dispose of any suites used
     mSuites.SPBasic->ReleaseSuite(kPrSDKPPixSuite, kPrSDKPPixSuiteVersion);
@@ -380,8 +380,8 @@ TransmitPlugin::~TransmitPlugin()
 
 #pragma mark - Setup Dialog (N/A?)
 
-tmResult TransmitPlugin::SetupDialog(tmStdParms* ioStdParms,
-                                     prParentWnd inParentWnd)
+tmResult SyphonTransmitPlugin::SetupDialog(tmStdParms* ioStdParms,
+                                           prParentWnd inParentWnd)
 {
     // Get the settings, display a modal setup dialog for the user
     // MessageBox()
@@ -394,8 +394,8 @@ tmResult TransmitPlugin::SetupDialog(tmStdParms* ioStdParms,
 	
 #pragma mark - Reset
 
-tmResult TransmitPlugin::NeedsReset(const tmStdParms* inStdParms,
-                                    prBool* outResetModule)
+tmResult SyphonTransmitPlugin::NeedsReset(const tmStdParms* inStdParms,
+                                          prBool* outResetModule)
 {
     NSLog(@"Reset Plugin");
     // Did the hardware change?
@@ -408,16 +408,16 @@ tmResult TransmitPlugin::NeedsReset(const tmStdParms* inStdParms,
 	
 #pragma mark - Create
 
-void* TransmitPlugin::CreateInstance(const tmStdParms* inStdParms,
-                                     tmInstance* inInstance)
+void* SyphonTransmitPlugin::CreateInstance(const tmStdParms* inStdParms,
+                                           tmInstance* inInstance)
 {
-    return new TransmitInstance(inInstance, mDevice, mSettings, mSuites, mSyphonServer);
+    return new SyphonTransmitInstance(inInstance, mDevice, mSettings, mSuites, mSyphonServer);
 }
 
 #pragma mark - Dispose
 
-void TransmitPlugin::DisposeInstance(const tmStdParms* inStdParms,
-                                     tmInstance* inInstance)
+void SyphonTransmitPlugin::DisposeInstance(const tmStdParms* inStdParms,
+                                           tmInstance* inInstance)
 {
-    delete (TransmitInstance*)inInstance->ioPrivateInstanceData;
+    delete (SyphonTransmitInstance*)inInstance->ioPrivateInstanceData;
 }
