@@ -40,12 +40,12 @@
 		7E27144214BAAD78008769A1 /* Transmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transmitter.cpp; path = ../Transmitter.cpp; sourceTree = SOURCE_ROOT; };
 		7E27144314BAAD78008769A1 /* TransmitterPlugin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TransmitterPlugin.mm; path = ../TransmitterPlugin.mm; sourceTree = SOURCE_ROOT; };
 		7E27144414BAAD78008769A1 /* TransmitterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransmitterPlugin.h; path = ../TransmitterPlugin.h; sourceTree = SOURCE_ROOT; };
-		7E27144714BAAE3B008769A1 /* PrSDKPPixSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrSDKPPixSuite.h; path = ../../../Headers/PrSDKPPixSuite.h; sourceTree = SOURCE_ROOT; };
-		7E27144814BAAE3B008769A1 /* PrSDKTransmit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrSDKTransmit.h; path = ../../../Headers/PrSDKTransmit.h; sourceTree = SOURCE_ROOT; };
+		7E27144714BAAE3B008769A1 /* PrSDKPPixSuite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrSDKPPixSuite.h; path = ../Adobe/Headers/PrSDKPPixSuite.h; sourceTree = SOURCE_ROOT; };
+		7E27144814BAAE3B008769A1 /* PrSDKTransmit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrSDKTransmit.h; path = ../Adobe/Headers/PrSDKTransmit.h; sourceTree = SOURCE_ROOT; };
 		7E48CD0E1700FCA400D1EFDC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		7EFEE1D015E5641300B7561D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		7EFEE20815E56EBE00B7561D /* SDK_File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDK_File.h; path = ../../../Utils/SDK_File.h; sourceTree = SOURCE_ROOT; };
-		7EFEE21615E56F6400B7561D /* SDK_File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDK_File.cpp; path = ../../../Utils/SDK_File.cpp; sourceTree = SOURCE_ROOT; };
+		7EFEE20815E56EBE00B7561D /* SDK_File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDK_File.h; path = ../Adobe/Utils/SDK_File.h; sourceTree = SOURCE_ROOT; };
+		7EFEE21615E56F6400B7561D /* SDK_File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDK_File.cpp; path = ../Adobe/Utils/SDK_File.cpp; sourceTree = SOURCE_ROOT; };
 		8D576316048677EA00EA77CD /* Transmitter.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Transmitter.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -218,6 +218,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					../Adobe/Headers/,
+					../Adobe/Utils/,
+				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				PRODUCT_NAME = Transmitter;
