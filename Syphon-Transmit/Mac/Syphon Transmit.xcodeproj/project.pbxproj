@@ -46,7 +46,7 @@
 		7EFEE1D015E5641300B7561D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7EFEE20815E56EBE00B7561D /* SDK_File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDK_File.h; path = ../Adobe/Utils/SDK_File.h; sourceTree = SOURCE_ROOT; };
 		7EFEE21615E56F6400B7561D /* SDK_File.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDK_File.cpp; path = ../Adobe/Utils/SDK_File.cpp; sourceTree = SOURCE_ROOT; };
-		8D576316048677EA00EA77CD /* Transmitter.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Transmitter.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D576316048677EA00EA77CD /* Syphon Transmit.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Syphon Transmit.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +115,7 @@
 		19C28FB6FE9D52B211CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D576316048677EA00EA77CD /* Transmitter.bundle */,
+				8D576316048677EA00EA77CD /* Syphon Transmit.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -123,9 +123,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D57630D048677EA00EA77CD /* Transmitter */ = {
+		8D57630D048677EA00EA77CD /* Syphon Transmit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Transmitter" */;
+			buildConfigurationList = 1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Syphon Transmit" */;
 			buildPhases = (
 				8D57630F048677EA00EA77CD /* Resources */,
 				8D576311048677EA00EA77CD /* Sources */,
@@ -136,10 +136,10 @@
 			);
 			dependencies = (
 			);
-			name = Transmitter;
+			name = "Syphon Transmit";
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = Transmitter;
-			productReference = 8D576316048677EA00EA77CD /* Transmitter.bundle */;
+			productReference = 8D576316048677EA00EA77CD /* Syphon Transmit.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -150,7 +150,7 @@
 			attributes = {
 				LastUpgradeCheck = 0450;
 			};
-			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Transmitter" */;
+			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Syphon Transmit" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -164,7 +164,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D57630D048677EA00EA77CD /* Transmitter */,
+				8D57630D048677EA00EA77CD /* Syphon Transmit */,
 			);
 		};
 /* End PBXProject section */
@@ -224,7 +224,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = Transmitter;
+				PRODUCT_NAME = "Syphon Transmit";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -242,7 +242,7 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				PRODUCT_NAME = Transmitter;
+				PRODUCT_NAME = "Syphon Transmit";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -286,7 +286,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Transmitter" */ = {
+		1DEB911A08733D790010E9CD /* Build configuration list for PBXNativeTarget "Syphon Transmit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB911B08733D790010E9CD /* Debug */,
@@ -295,7 +295,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Transmitter" */ = {
+		1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Syphon Transmit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB911F08733D790010E9CD /* Debug */,

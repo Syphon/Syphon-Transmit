@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D57630D048677EA00EA77CD"
                BuildableName = "Transmitter.bundle"
-               BlueprintName = "Transmitter"
-               ReferencedContainer = "container:Transmitter.xcodeproj">
+               BlueprintName = "Syphon Transmit"
+               ReferencedContainer = "container:Syphon Transmit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8D57630D048677EA00EA77CD"
+            BuildableName = "Transmitter.bundle"
+            BlueprintName = "Transmitter"
+            ReferencedContainer = "container:Transmitter.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -43,15 +52,6 @@
          runnableDebuggingMode = "0"
          FilePath = "/Applications/Adobe Premiere Pro CC/Adobe Premiere Pro CC.app">
       </PathRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "Transmitter.bundle"
-            BlueprintName = "Transmitter"
-            ReferencedContainer = "container:Transmitter.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -61,15 +61,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-            BuildableName = "Transmitter.bundle"
-            BlueprintName = "Transmitter"
-            ReferencedContainer = "container:Transmitter.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
