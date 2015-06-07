@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8D57630D048677EA00EA77CD"
-               BuildableName = "Transmitter.bundle"
+               BuildableName = "Syphon Transmit.bundle"
                BlueprintName = "Syphon Transmit"
                ReferencedContainer = "container:Syphon Transmit.xcodeproj">
             </BuildableReference>
@@ -52,6 +52,15 @@
          runnableDebuggingMode = "0"
          FilePath = "/Applications/Adobe Premiere Pro CC/Adobe Premiere Pro CC.app">
       </PathRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8D57630D048677EA00EA77CD"
+            BuildableName = "Syphon Transmit.bundle"
+            BlueprintName = "Syphon Transmit"
+            ReferencedContainer = "container:Syphon Transmit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

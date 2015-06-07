@@ -345,12 +345,11 @@ SyphonTransmitPlugin::SyphonTransmitPlugin(tmStdParms* ioStdParms,
         
         if(mCGLContext)
         {
-            mSyphonServer = [[SyphonServer alloc] initWithName:@"Selected Source" context:mCGLContext options:nil];
+            mSyphonServer = [[SyphonServer alloc] initWithName:@"Selected Source" context:mCGLContext options:@{SyphonServerOptionIsPrivate : @NO}];
             
-            NSLog(@"Initting Syphon Server %@,  for instance %p", mSyphonServer, this);
+            NSLog(@"Initting Syphon Server %@ description: %@,  for instance %p", mSyphonServer, [mSyphonServer serverDescription], this);
         }
     }
-    
 }
 
 #pragma mark - Shutdown
