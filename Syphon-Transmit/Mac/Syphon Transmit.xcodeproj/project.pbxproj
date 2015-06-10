@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B006DEA1B0BCB4900B7A99C /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B006DE91B0BCB4900B7A99C /* Syphon.framework */; };
 		1B006DEC1B0BCBFE00B7A99C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B006DEB1B0BCBFE00B7A99C /* OpenGL.framework */; };
-		1B006DEE1B0BE9DB00B7A99C /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1B006DE91B0BCB4900B7A99C /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B5FE5151B28BEAC00EED2A1 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1B5FE5111B28BE7B00EED2A1 /* Syphon.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1B5FE5181B28C2EA00EED2A1 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B5FE5111B28BE7B00EED2A1 /* Syphon.framework */; };
 		7E27144514BAAD78008769A1 /* SyphonTransmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E27144214BAAD78008769A1 /* SyphonTransmitter.cpp */; };
 		7E27144614BAAD78008769A1 /* SyphonTransmitterPlugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E27144314BAAD78008769A1 /* SyphonTransmitterPlugin.mm */; };
 		7E48CD0F1700FCA400D1EFDC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E48CD0E1700FCA400D1EFDC /* Cocoa.framework */; };
@@ -19,6 +19,23 @@
 		8D5B49A804867FD3000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8D5B49A704867FD3000E48DA /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1B5FE5101B28BE7B00EED2A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B5FE50B1B28BE7B00EED2A1 /* Syphon.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Syphon;
+		};
+		1B5FE5161B28C29700EED2A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B5FE50B1B28BE7B00EED2A1 /* Syphon.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = Syphon;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		1B006DED1B0BE9D500B7A99C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -26,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B006DEE1B0BE9DB00B7A99C /* Syphon.framework in CopyFiles */,
+				1B5FE5151B28BEAC00EED2A1 /* Syphon.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,8 +52,8 @@
 /* Begin PBXFileReference section */
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		1B006DE91B0BCB4900B7A99C /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Syphon.framework; sourceTree = "<group>"; };
 		1B006DEB1B0BCBFE00B7A99C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
+		1B5FE50B1B28BE7B00EED2A1 /* Syphon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Syphon.xcodeproj; path = "../../Syphon-Framework/Syphon.xcodeproj"; sourceTree = "<group>"; };
 		7E27144214BAAD78008769A1 /* SyphonTransmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyphonTransmitter.cpp; path = ../SyphonTransmitter.cpp; sourceTree = SOURCE_ROOT; };
 		7E27144314BAAD78008769A1 /* SyphonTransmitterPlugin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SyphonTransmitterPlugin.mm; path = ../SyphonTransmitterPlugin.mm; sourceTree = SOURCE_ROOT; };
 		7E27144414BAAD78008769A1 /* SyphonTransmitterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyphonTransmitterPlugin.h; path = ../SyphonTransmitterPlugin.h; sourceTree = SOURCE_ROOT; };
@@ -55,9 +72,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B5FE5181B28C2EA00EED2A1 /* Syphon.framework in Frameworks */,
 				1B006DEC1B0BCBFE00B7A99C /* OpenGL.framework in Frameworks */,
 				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
-				1B006DEA1B0BCB4900B7A99C /* Syphon.framework in Frameworks */,
 				7EFEE1D115E5641300B7561D /* Foundation.framework in Frameworks */,
 				7E48CD0F1700FCA400D1EFDC /* Cocoa.framework in Frameworks */,
 			);
@@ -69,6 +86,7 @@
 		089C166AFE841209C02AAC07 /* Transmitter */ = {
 			isa = PBXGroup;
 			children = (
+				1B5FE50B1B28BE7B00EED2A1 /* Syphon.xcodeproj */,
 				08FB77AFFE84173DC02AAC07 /* Source */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
@@ -85,7 +103,6 @@
 				7E27144714BAAE3B008769A1 /* PrSDKPPixSuite.h */,
 				7E27144814BAAE3B008769A1 /* PrSDKTransmit.h */,
 				1B006DEB1B0BCBFE00B7A99C /* OpenGL.framework */,
-				1B006DE91B0BCB4900B7A99C /* Syphon.framework */,
 				0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */,
 				7E48CD0E1700FCA400D1EFDC /* Cocoa.framework */,
 				7EFEE1D015E5641300B7561D /* Foundation.framework */,
@@ -120,6 +137,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1B5FE50C1B28BE7B00EED2A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1B5FE5111B28BE7B00EED2A1 /* Syphon.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +160,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				1B5FE5171B28C29700EED2A1 /* PBXTargetDependency */,
 			);
 			name = "Syphon Transmit";
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -162,12 +188,28 @@
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* Transmitter */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 1B5FE50C1B28BE7B00EED2A1 /* Products */;
+					ProjectRef = 1B5FE50B1B28BE7B00EED2A1 /* Syphon.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D57630D048677EA00EA77CD /* Syphon Transmit */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		1B5FE5111B28BE7B00EED2A1 /* Syphon.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Syphon.framework;
+			remoteRef = 1B5FE5101B28BE7B00EED2A1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D57630F048677EA00EA77CD /* Resources */ = {
@@ -192,6 +234,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1B5FE5171B28C29700EED2A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Syphon;
+			targetProxy = 1B5FE5161B28C29700EED2A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8D5B49A704867FD3000E48DA /* InfoPlist.strings */ = {
@@ -224,8 +274,10 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Syphon Transmit";
 				SDKROOT = macosx;
+				SYPHON_UNIQUE_CLASS_NAME_PREFIX = MercuryTransmit;
 			};
 			name = Debug;
 		};
@@ -242,8 +294,10 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "Syphon Transmit";
 				SDKROOT = macosx;
+				SYPHON_UNIQUE_CLASS_NAME_PREFIX = MercuryTransmit;
 			};
 			name = Release;
 		};
@@ -263,7 +317,7 @@
 					../../../Utils/,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -278,7 +332,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				SDKROOT = macosx10.7;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;

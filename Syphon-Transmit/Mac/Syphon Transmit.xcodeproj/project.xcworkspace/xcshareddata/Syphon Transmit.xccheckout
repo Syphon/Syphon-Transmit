@@ -10,6 +10,8 @@
 	<string>Syphon Transmit</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>7360F7D45D6592BBC0CCBB41E9FC383DA90D4985</key>
+		<string>https://github.com/Syphon/Syphon-Framework.git</string>
 		<key>962CE3E709D645C7E11A2F4E90634B21C1772565</key>
 		<string>https://github.com/vade/Syphon-Transmit.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>Syphon-Transmit/Mac/Syphon Transmit.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>7360F7D45D6592BBC0CCBB41E9FC383DA90D4985</key>
+		<string>../../../../Syphon-Framework/</string>
 		<key>962CE3E709D645C7E11A2F4E90634B21C1772565</key>
 		<string>../../../..</string>
 	</dict>
@@ -28,6 +32,14 @@
 	<string>962CE3E709D645C7E11A2F4E90634B21C1772565</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7360F7D45D6592BBC0CCBB41E9FC383DA90D4985</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Syphon-Framework</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
