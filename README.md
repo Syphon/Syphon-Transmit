@@ -10,3 +10,9 @@ Syphon Output via Adobe Mercury Transmit Engine for
 * Adobe Premier Pro CC
 * Adobe Premier Pro CS6
 * and any Adobe Mercury Transmit capable host.
+
+# Installation
+
+Install the Mercury Transmit Plugin to
+
+/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
