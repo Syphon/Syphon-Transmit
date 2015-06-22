@@ -260,7 +260,10 @@ tmResult SyphonTransmitInstance::PushVideo(const tmStdParms* inStdParms,
     mSuites.PPixSuite->GetBounds(inPushVideo->inFrames[0].inFrame, &frameBounds);
     mSuites.PPixSuite->GetPixelAspectRatio(inPushVideo->inFrames[0].inFrame, &parNum, &parDen);
     mSuites.PPixSuite->GetPixelFormat(inPushVideo->inFrames[0].inFrame, &pixelFormat);
-    
+
+    csSDK_int32 rowBytes = 0;
+    mSuites.PPixSuite->GetRowBytes(inPushVideo->inFrames[0].inFrame, &rowBytes);
+
     char* pixels = NULL;
     mSuites.PPixSuite->GetPixels(inPushVideo->inFrames[0].inFrame,
                                  PrPPixBufferAccess_ReadOnly,
@@ -279,7 +282,27 @@ tmResult SyphonTransmitInstance::PushVideo(const tmStdParms* inStdParms,
         glEnable(GL_TEXTURE_RECTANGLE_EXT);
         glBindTexture(GL_TEXTURE_RECTANGLE_EXT, texture);
         
-        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, 1);
+        GLuint bitsPerBlock = 32;
+        GLuint blockWidth = 1;
+        GLuint blockHeight = 1;
+
+        size_t rowBitsPerBlock = bitsPerBlock / blockHeight;
+        GLuint rowLength = rowBytes * 8 / rowBitsPerBlock * blockWidth;
+
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, rowLength);
+        glPixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0);
+        glPixelStorei(GL_UNPACK_LSB_FIRST, GL_FALSE);
+        glPixelStorei(GL_UNPACK_SKIP_IMAGES, 0);
+        glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+        glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+        glPixelStorei(GL_UNPACK_SWAP_BYTES, GL_FALSE);
+        
+        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+        
+        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_STORAGE_HINT_APPLE , GL_STORAGE_SHARED_APPLE);
+        glTextureRangeAPPLE(GL_TEXTURE_RECTANGLE_EXT, 32 * syphonRect.size.width * syphonRect.size.height, pixels);
+        
         glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
