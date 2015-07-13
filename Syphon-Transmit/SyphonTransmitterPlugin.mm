@@ -291,7 +291,7 @@ tmResult SyphonTransmitInstance::PushVideo(const tmStdParms* inStdParms,
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glPixelStorei(GL_UNPACK_ROW_LENGTH, rowLength);
-        glPixelStorei(GL_UNPACK_IMAGE_HEIGHT, 0);
+        glPixelStorei(GL_UNPACK_IMAGE_HEIGHT, (GLint)syphonRect.size.height);
         glPixelStorei(GL_UNPACK_LSB_FIRST, GL_FALSE);
         glPixelStorei(GL_UNPACK_SKIP_IMAGES, 0);
         glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
