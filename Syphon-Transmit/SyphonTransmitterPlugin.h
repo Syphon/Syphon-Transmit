@@ -30,6 +30,7 @@
 
 #import <Syphon/Syphon.h>
 #import <OpenGL/OpenGL.h>
+#include <OpenGL/gl.h>
 
 #define	PLUGIN_DISPLAY_NAME	L"Syphon Server Transmitter"
 
