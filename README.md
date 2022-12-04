@@ -16,3 +16,12 @@ Syphon Output via Adobe Mercury Transmit Engine for
 Install the Mercury Transmit Plugin to
 
 /Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
+
+
+# Developers
+
+For developers, you need to have agreed to Adobes terms and downloaded the Appropriate Mercury Transmit headers, which you can get from the Adobe Premire Pro or After Effects  C++ SDKs
+
+https://developer.adobe.com/console/servicesandapis/pr
+
+And install the headers in the appropriate location.
