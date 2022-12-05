@@ -88,7 +88,8 @@ SyphonTransmitInstance::SyphonTransmitInstance(const tmInstance* inInstance,
                                                const SDKDevicePtr& inDevice,
                                                const SDKSettings& inSettings,
                                                const SDKSuites& inSuites,
-                                               SyphonServer* syphonServer     )
+                                               SyphonMetalServer* syphonServer,
+                                               id<MTLCommandQueue> commandQueue)
 :
 mDevice(inDevice),
 mSettings(inSettings),
@@ -99,10 +100,11 @@ mSuites(inSuites)
     mUpdateClockRegistration = 0;
     mPlaying = kPrFalse;
     
-    if(syphonServer)
+    if(syphonServer && commandQueue)
     {
         NSLog(@"Assigning Plugin Syphon Server to instance %p", syphonServer);
         mSyphonServerParentInstance = syphonServer;
+        mParentCommandQueue = commandQueue;
     }
     
     mSuites.TimeSuite->GetTicksPerSecond(&mTicksPerSecond);
@@ -271,47 +273,82 @@ tmResult SyphonTransmitInstance::PushVideo(const tmStdParms* inStdParms,
     
     @autoreleasepool
     {
-        // bind our syphon GL Context
-        CGLSetCurrentContext(mSyphonServerParentInstance.context);
+        id<MTLCommandBuffer> cmdBuffer = [mParentCommandQueue commandBuffer];
+        
+        uint32_t bitsPerBlock = 32;
+        uint32_t blockWidth = 1;
+        uint32_t blockHeight = 1;
+        size_t rowBitsPerBlock = bitsPerBlock / blockHeight;
+        uint32_t rowLength = rowBytes * 8 / rowBitsPerBlock * blockWidth;
         
         NSRect syphonRect = NSMakeRect(0, 0, abs(frameBounds.right - frameBounds.left), abs(frameBounds.top - frameBounds.bottom));
-        
-        // TODO: use bind to draw frame of size / unbind
-        GLuint texture = 0;
-        glGenTextures(1, &texture);
-        glEnable(GL_TEXTURE_RECTANGLE_EXT);
-        glBindTexture(GL_TEXTURE_RECTANGLE_EXT, texture);
-        
-        GLuint bitsPerBlock = 32;
-        GLuint blockWidth = 1;
-        GLuint blockHeight = 1;
 
-        size_t rowBitsPerBlock = bitsPerBlock / blockHeight;
-        GLuint rowLength = rowBytes * 8 / rowBitsPerBlock * blockWidth;
-
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        glPixelStorei(GL_UNPACK_ROW_LENGTH, rowLength);
-        glPixelStorei(GL_UNPACK_IMAGE_HEIGHT, (GLint)syphonRect.size.height);
-        glPixelStorei(GL_UNPACK_LSB_FIRST, GL_FALSE);
-        glPixelStorei(GL_UNPACK_SKIP_IMAGES, 0);
-        glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
-        glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
-        glPixelStorei(GL_UNPACK_SWAP_BYTES, GL_FALSE);
+        MTLTextureDescriptor* textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatBGRA8Unorm
+                                                                                                     width:syphonRect.size.width
+                                                                                                    height:syphonRect.size.height
+                                                                                                 mipmapped:NO];
         
-        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+        id<MTLTexture> texture = [mParentCommandQueue.device newTextureWithDescriptor:textureDescriptor];
+        MTLRegion region = MTLRegionMake2D(syphonRect.origin.x, syphonRect.origin.y, syphonRect.size.width, syphonRect.size.height);
         
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_STORAGE_HINT_APPLE , GL_STORAGE_SHARED_APPLE);
-        glTextureRangeAPPLE(GL_TEXTURE_RECTANGLE_EXT, 32 * syphonRect.size.width * syphonRect.size.height, pixels);
+        [texture replaceRegion:region
+                   mipmapLevel:0
+                     withBytes:pixels
+                   bytesPerRow:rowBytes];
+                
+        [mSyphonServerParentInstance publishFrameTexture:texture onCommandBuffer:cmdBuffer imageRegion:syphonRect flipped:NO];
         
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA, syphonRect.size.width, syphonRect.size.height, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
+        [cmdBuffer addCompletedHandler:^(id<MTLCommandBuffer> _Nonnull) {
+                  
+            [texture release];
+            
+        }];
         
-        [mSyphonServerParentInstance publishFrameTexture:texture textureTarget:GL_TEXTURE_RECTANGLE_EXT imageRegion:syphonRect textureDimensions:syphonRect.size flipped:NO];
+        [cmdBuffer commit];
+            
         
-        glDeleteTextures(1, &texture);
+        
+//        // bind our syphon GL Context
+//        CGLSetCurrentContext(mSyphonServerParentInstance.context);
+//
+//        NSRect syphonRect = NSMakeRect(0, 0, abs(frameBounds.right - frameBounds.left), abs(frameBounds.top - frameBounds.bottom));
+//
+//        // TODO: use bind to draw frame of size / unbind
+//        GLuint texture = 0;
+//        glGenTextures(1, &texture);
+//        glEnable(GL_TEXTURE_RECTANGLE_EXT);
+//        glBindTexture(GL_TEXTURE_RECTANGLE_EXT, texture);
+//
+//        GLuint bitsPerBlock = 32;
+//        GLuint blockWidth = 1;
+//        GLuint blockHeight = 1;
+//
+//        size_t rowBitsPerBlock = bitsPerBlock / blockHeight;
+//        GLuint rowLength = rowBytes * 8 / rowBitsPerBlock * blockWidth;
+//
+//        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+//        glPixelStorei(GL_UNPACK_ROW_LENGTH, rowLength);
+//        glPixelStorei(GL_UNPACK_IMAGE_HEIGHT, (GLint)syphonRect.size.height);
+//        glPixelStorei(GL_UNPACK_LSB_FIRST, GL_FALSE);
+//        glPixelStorei(GL_UNPACK_SKIP_IMAGES, 0);
+//        glPixelStorei(GL_UNPACK_SKIP_PIXELS, 0);
+//        glPixelStorei(GL_UNPACK_SKIP_ROWS, 0);
+//        glPixelStorei(GL_UNPACK_SWAP_BYTES, GL_FALSE);
+//
+//        glPixelStorei(GL_UNPACK_CLIENT_STORAGE_APPLE, GL_TRUE);
+//
+//        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_STORAGE_HINT_APPLE , GL_STORAGE_SHARED_APPLE);
+//        glTextureRangeAPPLE(GL_TEXTURE_RECTANGLE_EXT, 32 * syphonRect.size.width * syphonRect.size.height, pixels);
+//
+//        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//        glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//        glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, GL_RGBA, syphonRect.size.width, syphonRect.size.height, 0, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, pixels);
+//
+//        [mSyphonServerParentInstance publishFrameTexture:texture textureTarget:GL_TEXTURE_RECTANGLE_EXT imageRegion:syphonRect textureDimensions:syphonRect.size flipped:NO];
+//
+//        glDeleteTextures(1, &texture);
     }
 				
     // Dispose of the PPix(es) when done!
@@ -346,29 +383,13 @@ SyphonTransmitPlugin::SyphonTransmitPlugin(tmStdParms* ioStdParms,
     
     @autoreleasepool
     {
-        CGLPixelFormatObj mPxlFmt = NULL;
-        CGLPixelFormatAttribute attribs[] = {kCGLPFAAccelerated, kCGLPFANoRecovery, (CGLPixelFormatAttribute)NULL};
-        
-        CGLError err = kCGLNoError;
-        GLint numPixelFormats = 0;
-        
-        err = CGLChoosePixelFormat(attribs, &mPxlFmt, &numPixelFormats);
-        
-        if(err != kCGLNoError)
+        id<MTLDevice> device = MTLCreateSystemDefaultDevice();
+      
+        if(device)
         {
-            NSLog(@"Error choosing pixel format %s", CGLErrorString(err));
-        }
-        
-        err = CGLCreateContext(mPxlFmt, NULL, &mCGLContext);
-        
-        if(err != kCGLNoError)
-        {
-            NSLog(@"Error creating context %s", CGLErrorString(err));
-        }
-        
-        if(mCGLContext)
-        {
-            mSyphonServer = [[SyphonServer alloc] initWithName:@"Selected Source" context:mCGLContext options:@{SyphonServerOptionIsPrivate : @NO}];
+            mCommandQueue = [device newCommandQueue];
+            
+            mSyphonServer = [[SyphonMetalServer alloc] initWithName:@"Selected Source" device:device options:@{SyphonServerOptionIsPrivate : @NO}];
             
             NSLog(@"Initting Syphon Server %@ description: %@,  for instance %p", mSyphonServer, [mSyphonServer serverDescription], this);
         }
@@ -390,12 +411,13 @@ SyphonTransmitPlugin::~SyphonTransmitPlugin()
         {
             NSLog(@"Releasing Syphon Server %@,  for instance %p", mSyphonServer, this);
             [mSyphonServer stop];
+            [mSyphonServer release];
             mSyphonServer = nil;
         }
-        if(mCGLContext)
+        if(mCommandQueue)
         {
-            CGLReleaseContext(mCGLContext);
-            mCGLContext = NULL;
+            [mCommandQueue release];
+            mCommandQueue = NULL;
         }
     }
 }
@@ -433,7 +455,7 @@ tmResult SyphonTransmitPlugin::NeedsReset(const tmStdParms* inStdParms,
 void* SyphonTransmitPlugin::CreateInstance(const tmStdParms* inStdParms,
                                            tmInstance* inInstance)
 {
-    return new SyphonTransmitInstance(inInstance, mDevice, mSettings, mSuites, mSyphonServer);
+    return new SyphonTransmitInstance(inInstance, mDevice, mSettings, mSuites, mSyphonServer, mCommandQueue);
 }
 
 #pragma mark - Dispose

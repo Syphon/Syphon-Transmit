@@ -29,8 +29,9 @@
 #endif
 
 #import <Syphon/Syphon.h>
-#import <OpenGL/OpenGL.h>
-#include <OpenGL/gl.h>
+#import <Metal/Metal.h>
+//#import <OpenGL/OpenGL.h>
+//#include <OpenGL/gl.h>
 
 #define	PLUGIN_DISPLAY_NAME	L"Syphon Server Transmitter"
 
@@ -68,7 +69,8 @@ public:
 		const SDKDevicePtr& inDevice,
 		const SDKSettings& inSettings,
 		const SDKSuites& inSuites,
-        SyphonServer* syphonServer);
+       SyphonMetalServer* syphonServer,
+       id<MTLCommandQueue> commandQueue);
 
 	~SyphonTransmitInstance();
 
@@ -117,7 +119,8 @@ private:
     
     // Our Syphon Server is passed in from our Plugin below during instantiation
     // We only use it to publish frames, so we dont do anything like dealloc it, etc.
-    SyphonServer* mSyphonServerParentInstance;
+    id<MTLCommandQueue> mParentCommandQueue;
+    SyphonMetalServer* mSyphonServerParentInstance;
 };
 
 
@@ -150,8 +153,8 @@ public:
 		const tmStdParms* inStdParms,
 		tmInstance* inInstance);
 
-    SyphonServer* mSyphonServer;
-    CGLContextObj mCGLContext;
+    id<MTLCommandQueue> mCommandQueue;
+    SyphonMetalServer* mSyphonServer;
 
 private:
 	SDKDevicePtr	mDevice;
