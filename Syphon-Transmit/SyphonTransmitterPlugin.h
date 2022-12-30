@@ -19,10 +19,10 @@
 /*                                                                 */
 /*******************************************************************/
 
-#include <PrSDKTransmit.h>
-#include <PrSDKPlayModuleAudioSuite.h>
-#include <PrSDKPPixSuite.h>
-#include <PrSDKThreadedWorkSuite.h>
+#include "PrSDKTransmit.h"
+#include "PrSDKPlayModuleAudioSuite.h"
+#include "PrSDKPPixSuite.h"
+#include "PrSDKThreadedWorkSuite.h"
 #include "SDK_File.h"
 #ifdef PRWIN_ENV
 #include <ctime>
