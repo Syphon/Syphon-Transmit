@@ -1,22 +1,20 @@
 # Syphon-Transmit
-Syphon Output via Adobe Mercury Transmit Engine for
 
-* Adobe Premier Pro CC 2015
-* Adobe After Effects CC 2015
-* Adobe SpeedGrade CC 2015
-* Adobe Premier Pro CC 2014
-* Adobe After Effects CC 2014
-* Adobe SpeedGrade CC 2014
-* Adobe Premier Pro CC
-* Adobe Premier Pro CS6
-* and any Adobe Mercury Transmit capable host.
+Syphon Output via Adobe Mercury Transmit Engine for Adobe Mercury Transmit Hosts.
+
+This version supports Metal Rendering
+
+Supported, but not limited to:
+* Adobe Premiere Pro 2023
+* Adobe After Effects 2023
+* Adobe SpeedGrade 2023
+* Adobe Character Animator 2023
 
 # Installation
 
 Install the Mercury Transmit Plugin to
 
 /Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/
-
 
 # Developers
 
