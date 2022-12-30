@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "D5AEA8F7-C9FB-49FF-B774-FC632D52E537"
    type = "1"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "C46786BB-6AEE-4289-98CF-0BF03EF632A6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -13,10 +15,10 @@
             timestampString = "453825596.761988"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
-            landmarkName = "SyphonTransmitPlugin::SyphonTransmitPlugin(tmStdParms* ioStdParms, tmPluginInfo* outPluginInfo)"
-            landmarkType = "5">
+            startingLineNumber = "377"
+            endingLineNumber = "377"
+            landmarkName = "SyphonTransmitPlugin::SyphonTransmitPlugin(ioStdParms, outPluginInfo)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B006DEC1B0BCBFE00B7A99C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B006DEB1B0BCBFE00B7A99C /* OpenGL.framework */; };
 		1B5FE5151B28BEAC00EED2A1 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1B5FE5111B28BE7B00EED2A1 /* Syphon.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		1B5FE5181B28C2EA00EED2A1 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B5FE5111B28BE7B00EED2A1 /* Syphon.framework */; };
+		1BF166A1293DAB99004D5608 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BF166A0293DAB99004D5608 /* Metal.framework */; };
 		7E27144514BAAD78008769A1 /* SyphonTransmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E27144214BAAD78008769A1 /* SyphonTransmitter.cpp */; };
 		7E27144614BAAD78008769A1 /* SyphonTransmitterPlugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7E27144314BAAD78008769A1 /* SyphonTransmitterPlugin.mm */; };
 		7E48CD0F1700FCA400D1EFDC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E48CD0E1700FCA400D1EFDC /* Cocoa.framework */; };
@@ -54,6 +54,7 @@
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		1B006DEB1B0BCBFE00B7A99C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		1B5FE50B1B28BE7B00EED2A1 /* Syphon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Syphon.xcodeproj; path = "../../Syphon-Framework/Syphon.xcodeproj"; sourceTree = "<group>"; };
+		1BF166A0293DAB99004D5608 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		7E27144214BAAD78008769A1 /* SyphonTransmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SyphonTransmitter.cpp; path = ../SyphonTransmitter.cpp; sourceTree = SOURCE_ROOT; };
 		7E27144314BAAD78008769A1 /* SyphonTransmitterPlugin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SyphonTransmitterPlugin.mm; path = ../SyphonTransmitterPlugin.mm; sourceTree = SOURCE_ROOT; };
 		7E27144414BAAD78008769A1 /* SyphonTransmitterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyphonTransmitterPlugin.h; path = ../SyphonTransmitterPlugin.h; sourceTree = SOURCE_ROOT; };
@@ -72,8 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BF166A1293DAB99004D5608 /* Metal.framework in Frameworks */,
 				1B5FE5181B28C2EA00EED2A1 /* Syphon.framework in Frameworks */,
-				1B006DEC1B0BCBFE00B7A99C /* OpenGL.framework in Frameworks */,
 				8D576314048677EA00EA77CD /* CoreFoundation.framework in Frameworks */,
 				7EFEE1D115E5641300B7561D /* Foundation.framework in Frameworks */,
 				7E48CD0F1700FCA400D1EFDC /* Cocoa.framework in Frameworks */,
@@ -91,6 +92,7 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* External Frameworks and Libraries */,
 				19C28FB6FE9D52B211CA2CBB /* Products */,
+				1BF1669F293DAB99004D5608 /* Frameworks */,
 			);
 			name = Transmitter;
 			sourceTree = "<group>";
@@ -143,6 +145,14 @@
 				1B5FE5111B28BE7B00EED2A1 /* Syphon.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1BF1669F293DAB99004D5608 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1BF166A0293DAB99004D5608 /* Metal.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +284,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Syphon Transmit";
 				SDKROOT = macosx;
@@ -294,6 +305,7 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "Syphon Transmit";
 				SDKROOT = macosx;
@@ -304,7 +316,6 @@
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
@@ -325,7 +336,6 @@
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
