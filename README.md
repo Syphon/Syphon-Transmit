@@ -2,6 +2,11 @@
 
 Syphon Output via Adobe Mercury Transmit Engine for Adobe Mercury Transmit Hosts.
 
+![adobe_after_effects_128](https://user-images.githubusercontent.com/65011/210151579-57b529e3-0d47-41cf-a9ad-ab9fff1e6492.png)
+![adobe_character_animator_128](https://user-images.githubusercontent.com/65011/210151578-b136a690-666f-4bd4-99ea-a46d76c3bf49.png)
+![adobe_premiere_pro_128](https://user-images.githubusercontent.com/65011/210151577-3c527d02-5c1b-46eb-bc6a-31f3540db513.png)
+
+
 This version supports Metal Rendering
 
 Supported, but not limited to:
