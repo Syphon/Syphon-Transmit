@@ -12,7 +12,6 @@ This version supports Metal Rendering
 Supported, but not limited to:
 * Adobe Premiere Pro 2023
 * Adobe After Effects 2023
-* Adobe SpeedGrade 2023
 * Adobe Character Animator 2023
 
 # Installation
