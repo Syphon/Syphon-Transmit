@@ -42,7 +42,7 @@ I get "Plugin Damaged" when opening after installing
 1. Quit whatever Adobe app.
 2. Open `Terminal.app' and run the following command:
 
-`xattr -cr /Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/Syphon\ Transmit.bundle`
+`xattr -cr /Library/Application\ Support/Adobe/Common/Plug-ins/7.0/MediaCore/Syphon\ Transmit.bundle`
 
 I dont see the Syphon output in my client app.
 
